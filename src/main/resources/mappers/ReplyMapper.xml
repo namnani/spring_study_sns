@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nani.boot1.dao.ReplyDAO">
+    <resultMap id="replyResultMap" type="Reply">
+        <id property="idx" />
+        <result column="post_idx" />
+        <result column="content" />
+        <result column="state" />
+        <result column="created_at" />
+        <result column="updated_at" />
+        <result column="like_count" />
+        <association property="user" column="user_idx" javaType="User">
+            <id column="user_idx" property="idx" />
+            <id column="user_name" property="name" />
+        </association>
+
+    </resultMap>
+
+    <select id="" resultType="postResultMap">
+      select
+        p.`idx`,
+        p.`title`,
+        p.`content`,
+        p.`state`,
+        p.`created_at`,
+        p.`updated_at`,
+        pl.`like_count`,
+        p.`user_idx`,
+        u.`name`
+      from `post` p
+      join `User` u on p.`user_idx` = u.`idx`
+      left outer join(
+        select `post_idx`, count(*) as `like_count`
+        from `post_like`
+        group by `post_idx`
+      ) pl on p.`idx` = pl.`post_idx`
+      order by p.`created_at` desc
+      limit #{offset}, #{count}
+    </select>
+
+    <insert id = "insertPost" keyProperty="idx" useGeneratedKeys="true">
+        insert into `post`(`author_idx`, `title`, `content`)
+        values(#{user.idx}, #{title}, #{content})
+    </insert>
+
+    <delete id="deletePost">
+        delete from `post` where `idx` = #{postIdx} and `author_idx` = #{userIdx}
+    </delete>
+
+    <insert id = "insertPostLike">
+        insert into `post_like`(`post_idx`, `user_idx`)
+        values(#{postIdx}, #{userIdx})
+    </insert>
+
+    <delete id="deletePostLike">
+        delete from `post_like`
+        where `post_idx` = #{postIdx}
+        and `user_idx`= #{userIdx}
+    </delete>
+</mapper>

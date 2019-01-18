@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/study_sns1?serverTimezone=UTC
+    username: root
+    password: a104706
+server:
+  port: 8082
