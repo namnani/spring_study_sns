@@ -15,22 +15,21 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class LoginArgResolver implements HandlerMethodArgumentResolver{
 
 	@Override
-	public boolean supportsParameter(MethodParameter arg0) {
-		// TODO Auto-generated method stub
-		return arg0.getParameterAnnotation(SessionLogin.class) != null;
+	public boolean supportsParameter(MethodParameter parameter) {
+		return parameter.getParameterAnnotation(SessionLogin.class) != null;
 	}
 
 	@Override
 	public Object resolveArgument(
-			MethodParameter arg0,
-			ModelAndViewContainer arg1,
-			NativeWebRequest arg2,
-			WebDataBinderFactory arg3) throws Exception {
+			MethodParameter parameter,
+			ModelAndViewContainer mavContainer,
+			NativeWebRequest webRequest,
+			WebDataBinderFactory binderFactory) throws Exception {
 		
-		HttpServletRequest request = (HttpServletRequest) arg2.getNativeRequest();
+		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
 		HttpSession session = request.getSession();
 		Integer userIdx = (Integer) session.getAttribute(Constant.SESSION_KEY_LOGIN_USER_IDX);
-		return userIdx;
+		return userIdx == null ? "empty" : userIdx;
 	}
 
 }

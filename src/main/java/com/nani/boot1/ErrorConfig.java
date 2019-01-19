@@ -36,3 +36,8 @@ public class ErrorConfig {
 //        "message": "Required int parameter 'type' is not present",
 //        "path": "/v1/sign/in"
 //}
+
+//{
+//"message": "Required int parameter 'type' is not present",
+//"code": 400
+//}

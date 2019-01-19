@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KakaoResultJson {
+public class KakaoUserInfo {
         private long id;
         private String kaccount_email;
         private boolean kaccount_email_verified;

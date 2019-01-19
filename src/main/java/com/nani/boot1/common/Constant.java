@@ -7,6 +7,8 @@ public class Constant {
 
     public final static String KAKAO_ADMIN_KEY = "dd4d91b7edcdccb0ac53037eb38972c4";
 
+    http
+
     public final static Integer POST_LIST_MAX_COUNT = 50;
     public final static Integer POST_LIST_DEFAULT_OFFSET = 0;
     public final static Integer POST_LIST_DEFAULT_COUNT = 20;

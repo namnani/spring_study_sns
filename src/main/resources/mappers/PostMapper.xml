@@ -15,10 +15,9 @@
             <id column="user_idx" property="idx" />
             <id column="user_name" property="name" />
         </association>
-
     </resultMap>
 
-    <select id="" resultType="postResultMap">
+    <select id="selectPostList" resultType="postResultMap">
       select
         p.`idx`,
         p.`title`,

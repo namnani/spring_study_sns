@@ -2,15 +2,17 @@ package com.nani.boot1.interceptor;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.nani.boot1.common.Constant;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 //import com.nani.study3.service.SignService;
-
+@Component
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	
 
@@ -19,31 +21,29 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 
 		Integer userIdx = (Integer)session.getAttribute(Constant.SESSION_KEY_LOGIN_USER_IDX);
-//		Integer userIdx = (Integer)session.getAttribute(SignService.SIGN_IN_USER_IDX_KEY);
-		
+
 		if(userIdx == null) {
-		
-			try {
-				response.sendRedirect("/site/signin.html");
-			}	catch(Exception e) {
-				e.printStackTrace();
+			Cookie[] cookies = request.getCookies();
+			String token = "";
+
+			if(cookies != null){
+				for(Cookie cookie : cookies){
+					if(cookie.getName().equals("Autosign")){
+						token = cookie.getValue();
+						break;
+					}
+				}
 			}
-			
-//			response.setCharacterEncoding("UTF-8");
-////			response.addHeader("Content-Type", "application/json;charset=UTF-8");
-//			try{
-//				PrintWriter printWriter = response.getWriter();
-//				printWriter.print("NEED LOGIN");
-//			}catch(Exception e){
-//				e.printStackTrace();
-//			}
-//			//이렇게 하면, 마냥 기다리다 request timeout까지 기다리다가 끝나버림.
-			return false;
+
+			if(token != null){
+				//token으로 userIdx 조회
+				//session에 userIdx 저장
+				//클라이언트 쿠키 삭제
+				//update 사용시간
+				//새로운 쿠키 발급
+			}
 		}	
 		
-		//다음으로 가게 해줄려고 할 
-//		return false;
-		//return false;는 다음으로 못가게 한다는 소리;
 		return super.preHandle(request, response, handler);
 	}
 

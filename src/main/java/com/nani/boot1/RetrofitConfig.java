@@ -1,7 +1,10 @@
 package com.nani.boot1;
 
 import com.google.gson.Gson;
-import com.nani.boot1.rest.KakaoAPI;
+import com.nani.boot1.model.GoogleUserInfo;
+import com.nani.boot1.rest.GoogleOAuthAPI;
+import com.nani.boot1.rest.GoogleUserInfoAPI;
+import com.nani.boot1.rest.KakaoUserinfoAPI;
 import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +21,18 @@ public class RetrofitConfig {
     //이 사용성을 보더라도, 카카오가 기존에 쓰는 기존의 코드가 너무 부적절하다.
 
     @Bean
-    public KakaoAPI getKakaoAPI() {
-        return getRetrofit(KakaoAPI.BASE_URL).create(KakaoAPI.class);
+    public KakaoUserinfoAPI getKakaoAPI() {
+        return getRetrofit(KakaoUserinfoAPI.BASE_URL).create(KakaoUserinfoAPI.class);
+    }
+
+    @Bean
+    public GoogleOAuthAPI getGoogleOAuthAPI(){
+        return getRetrofit(GoogleOAuthAPI.BASE_URL).create(GoogleOAuthAPI.class);
+    }
+
+    @Bean
+    public GoogleUserInfoAPI getGoogleUserInfoAPI(){
+        return getRetrofit(GoogleUserInfoAPI.BASE_URL).create(GoogleUserInfoAPI.class);
     }
 
     private Retrofit getRetrofit(String BASE_URL) {
